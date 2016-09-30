@@ -38,7 +38,6 @@ public class Location implements DatabaseInterface {
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery("SELECT * FROM locations WHERE id=:id")
         .addParameter("id", pId)
-        .throwOnMappingFailure(false)
         .executeAndFetchFirst(Location.class);
     }
   }
@@ -46,7 +45,6 @@ public class Location implements DatabaseInterface {
   public static List<Location> allLocations() {
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery("SELECT * FROM locations")
-        .throwOnMappingFailure(false)
         .executeAndFetch(Location.class);
     }
   }
