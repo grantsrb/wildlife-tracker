@@ -1,0 +1,51 @@
+<div class="jumbotron">
+  <h1>Locations</h1>
+</div>
+
+#if ($locations.size() > 0)
+  <div class="row">
+    <div class="col-sm-3">
+      <h2>Location</h2>
+    </div>
+    <div class="col-sm-6">
+      <div class="container">
+        <h2>Details</h2>
+      </div>
+    </div>
+  </div>
+  #foreach($location in $locations)
+    <div class="row">
+      <div class="col-sm-3">
+        <h4><strong>$location.getName()</strong></h4>
+      </div>
+      <div class="col-sm-6">
+        <div class="container">
+          <ul>
+            <p><strong>Sightings: </strong></p>
+            #foreach($sighting in $location.getSightings())
+              <li><strong>Animal: </strong><a href="/animals/$sighting.getAnimalId()"> $Animal.findById($sighting.getAnimalId()).getName()</a></li>
+              <li><strong>Time Spotted: </strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></li>
+              <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+            #end
+          </ul>
+        </div>
+      </div>
+    </div>
+  #end
+#else
+  <h2>No locations yet!</h2>
+#end
+
+<div class="row">
+  <div class="col-sm-4">
+    <h3>New Location</h3>
+    <form action="/locations/new-location" method="post">
+      <div class="form-group">
+        <label for="name">Name of location:</label>
+        <input type="text" name="name" class="form-control">
+      </div>
+      <input type="submit" value="Create">
+    </form>
+    <p>$exception</p>
+  </div>
+</div>

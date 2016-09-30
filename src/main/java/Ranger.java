@@ -8,6 +8,8 @@ public class Ranger implements DatabaseInterface{
   private String badgeId;
 
   public Ranger(String pName, String pBadgeId) {
+    if(pName.equals("") || pBadgeId.equals(""))
+      throw new IllegalArgumentException("Rangers must have a name and badge ID!");
     this.name = pName;
     this.badgeId = pBadgeId;
   }

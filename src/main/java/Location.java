@@ -7,6 +7,8 @@ public class Location implements DatabaseInterface {
   private String name;
 
   public Location(String pName) {
+    if(pName.equals(""))
+      throw new IllegalArgumentException("Locations must have a name!");
     this.name = pName;
   }
 

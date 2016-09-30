@@ -10,6 +10,8 @@ public class Animal implements DatabaseInterface {
   public static final String ANIMAL_TYPE = "animal";
 
   public Animal(String pName) {
+    if(pName.equals(""))
+      throw new IllegalArgumentException("Must provide animal name!");
     this.name = pName;
     this.type = ANIMAL_TYPE;
   }
@@ -30,6 +32,10 @@ public class Animal implements DatabaseInterface {
 
   public int getId() {
     return this.id;
+  }
+
+  public String getType() {
+    return this.type;
   }
 
   public String getName() {
