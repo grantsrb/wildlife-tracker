@@ -1,0 +1,81 @@
+<div class="jumbotron">
+  <h1>Sightings</h1>
+</div>
+
+#if ($sightings.size() > 0)
+  <div class="row">
+    <div class="col-sm-3">
+      <h2>Time of Sighting</h2>
+    </div>
+    <div class="col-sm-6">
+      <div class="container">
+        <h2>Details</h2>
+      </div>
+    </div>
+  </div>
+  #foreach($sighting in $sightings)
+    <div class="row">
+      <div class="col-sm-3">
+        <h4><strong>$sighting.getTimeSpotted()</strong></h4>
+      </div>
+      <div class="col-sm-6">
+        <div class="container">
+          <ul>
+            <li><strong>Animal Spotted: </strong><a href="/animals/$Animal.findById($sighting.getAnimalId()).getId()"> $Animal.findById($sighting.getAnimalId()).getName()</a></li>
+            <li><strong>Location: </strong><a href="/locations/$Location.findById($sighting.getLocationId()).getId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
+            <li><strong>Ranger: </strong><a href="/rangers/$Ranger.findById($sighting.getRangerId()).getId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  #end
+#else
+  <h2>No sightings yet!</h2>
+#end
+
+<div class="row">
+  <div class="col-sm-4">
+    <h3>New Sighting</h3>
+    <form action="/sightings/new" method="post">
+      <div class="form-group">
+        <label for="location">Location of sighting:</label>
+        <select name="location" class="form-control" required="required">
+          #foreach($location in $Location.allLocations())
+            <option value="$location.getId()">$location.getName()</option>
+          #end
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="animal">Animal sighted <em>(or enter new unendangered animal name below)</em>:</label>
+        <select name="animal" class="form-control" required="required">
+          #foreach($animal in $Animal.allAnimals())
+            <option value="$animal.getId()">$animal.getName()</option>
+          #end
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="animal-entry"><em>(Optional) enter new unendangered animal name</em>:</label>
+        <input type="text" name="animal-entry" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="ranger">Ranger who sighted animal:</label>
+        <select name="ranger" class="form-control" required="required">
+          #foreach($ranger in $Ranger.allRangers())
+            <option value="$ranger.getId()">$ranger.getName()</option>
+          #end
+        </select>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<a href="/animals/new">Enter New Animal</a><br>
+<a href="/locations/new">Enter New Location</a><br>
+<a href="/rangers/new">Enter New Ranger</a><br>
+
+<div class="success">
+  #if($success)
+    <p><em>Success!</em></p>
+  #end
+</div>

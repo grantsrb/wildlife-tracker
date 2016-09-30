@@ -63,4 +63,18 @@ public class LocationTest {
     assertEquals(0, Location.allLocations().size());
   }
 
+  @Test
+  public void getSightings_returnsAllSightingInstancesAttachedToThisLocation_ArrayList() {
+    Location testLocation = new Location("By the tree");
+    testLocation.save();
+    Sighting testSighting1 = new Sighting(1, testLocation.getId(), 1);
+    testSighting1.save();
+    Sighting testSighting2 = new Sighting(1, testLocation.getId(), 1);
+    testSighting2.save();
+    Sighting foundByMethod1 = testLocation.getSightings().get(0);
+    Sighting foundByMethod2 = testLocation.getSightings().get(1);
+    assertTrue(testSighting1.equals(foundByMethod1));
+    assertTrue(testSighting2.equals(foundByMethod2));
+  }
+
 }

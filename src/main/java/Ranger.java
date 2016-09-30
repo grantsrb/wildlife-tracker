@@ -13,6 +13,17 @@ public class Ranger implements DatabaseInterface{
   }
 
   /////////////////////////////////////////////////////////////////////////////
+  /// Network Methods
+
+  public List<Sighting> getSightings() {
+    try (Connection con = DB.sql2o.open()) {
+      return con.createQuery("SELECT * FROM sightings WHERE rangerId=:id")
+        .addParameter("id", this.id)
+        .executeAndFetch(Sighting.class);
+    }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////
   /// get and set Methods
 
   public int getId() {

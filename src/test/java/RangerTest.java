@@ -70,4 +70,18 @@ public class RangerTest {
     assertEquals(0, Ranger.allRangers().size());
   }
 
+  @Test
+  public void getSightings_returnsAllSightingInstancesAttachedToThisRanger_ArrayList() {
+    Ranger testRanger = new Ranger("Longmire", "007");
+    testRanger.save();
+    Sighting testSighting1 = new Sighting(1, 1, testRanger.getId());
+    testSighting1.save();
+    Sighting testSighting2 = new Sighting(1, 1, testRanger.getId());
+    testSighting2.save();
+    Sighting foundByMethod1 = testRanger.getSightings().get(0);
+    Sighting foundByMethod2 = testRanger.getSightings().get(1);
+    assertTrue(testSighting1.equals(foundByMethod1));
+    assertTrue(testSighting2.equals(foundByMethod2));
+  }
+
 }
