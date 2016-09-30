@@ -19,7 +19,7 @@ Tracks endangered animals by name. Allows user to detail medical state of animal
 
 ## Sighting Class Specifications
 #### Description
-Tracks animal sightings with detail about animal type, location, and time spotted. Attaches user's name to sighting.
+Tracks animal sightings with detail about animal, location, and time spotted. Attaches spotter's name to sighting.
 
 ## Ranger Class Specifications
 #### Description

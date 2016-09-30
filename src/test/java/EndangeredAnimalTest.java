@@ -53,8 +53,6 @@ public class EndangeredAnimalTest {
     testEndangeredAnimal2.save();
     EndangeredAnimal object1FoundById = EndangeredAnimal.findById(testEndangeredAnimal1.getId());
     EndangeredAnimal object2FoundById = EndangeredAnimal.findById(testEndangeredAnimal2.getId());
-    System.out.println(testEndangeredAnimal1.getHealth() + " " + testEndangeredAnimal1.getAge());
-    System.out.println(object1FoundById.getHealth() + " " + object1FoundById.getAge());
     assertTrue(testEndangeredAnimal1.equals(object1FoundById));
     assertTrue(testEndangeredAnimal2.equals(object2FoundById));
   }
@@ -79,16 +77,18 @@ public class EndangeredAnimalTest {
     assertEquals(0, EndangeredAnimal.allEndangeredAnimals().size());
   }
 
-  // @Test
-  // public void getSightings_returnsAllSightingInstancesAttachedToThisEndangeredAnimal_ArrayList() {
-  //   EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Lion", EndangeredAnimal.HEALTHY, EndangeredAnimal.ADULT);
-  //   testEndangeredAnimal.save();
-  //   Sighting testSighting1 = new Sighting(testEndangeredAnimal.getId(), 1, 1);
-  //   Sighting testSighting2 = new Sighting(testEndangeredAnimal.getId(), 1, 1);
-  //   Sighting foundByMethod1 = testEndangeredAnimal.getSightings().get(0);
-  //   Sighting foundByMethod2 = testEndangeredAnimal.getSightings().get(1);
-  //   assertTrue(testSighting1.equals(foundByMethod1));
-  //   assertTrue(testSighting2.equals(foundByMethod2));
-  // }
+  @Test
+  public void getSightings_returnsAllSightingInstancesAttachedToThisEndangeredAnimal_ArrayList() {
+    EndangeredAnimal testEndangeredAnimal = new EndangeredAnimal("Lion", EndangeredAnimal.HEALTHY, EndangeredAnimal.ADULT);
+    testEndangeredAnimal.save();
+    Sighting testSighting1 = new Sighting(testEndangeredAnimal.getId(), 1, 1);
+    testSighting1.save();
+    Sighting testSighting2 = new Sighting(testEndangeredAnimal.getId(), 1, 1);
+    testSighting2.save();
+    Sighting foundByMethod1 = testEndangeredAnimal.getSightings().get(0);
+    Sighting foundByMethod2 = testEndangeredAnimal.getSightings().get(1);
+    assertTrue(testSighting1.equals(foundByMethod1));
+    assertTrue(testSighting2.equals(foundByMethod2));
+  }
 
 }

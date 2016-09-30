@@ -19,9 +19,8 @@ public class Animal implements DatabaseInterface {
 
   public List<Sighting> getSightings() {
     try (Connection con = DB.sql2o.open()) {
-      return con.createQuery("SELECT * FROM sightings WHERE animalId=:id AND type=:type")
+      return con.createQuery("SELECT * FROM sightings WHERE animalId=:id")
         .addParameter("id", this.id)
-        .addParameter("type", this.type)
         .executeAndFetch(Sighting.class);
     }
   }
