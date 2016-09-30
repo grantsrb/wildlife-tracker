@@ -19,8 +19,9 @@ public class Animal implements DatabaseInterface {
 
   public List<Sighting> getSightings() {
     try (Connection con = DB.sql2o.open()) {
-      return con.createQuery("SELECT * FROM sightings WHERE animalId=:id")
+      return con.createQuery("SELECT * FROM sightings WHERE animalId=:id AND type=:type")
         .addParameter("id", this.id)
+        .addParameter("type", this.type)
         .executeAndFetch(Sighting.class);
     }
   }
@@ -39,8 +40,9 @@ public class Animal implements DatabaseInterface {
   public void setName(String pName) {
     this.name = pName;
     try(Connection con = DB.sql2o.open()) {
-      con.createQuery("UPDATE animals SET name=:name WHERE id=:id")
+      con.createQuery("UPDATE animals SET name=:name WHERE id=:id AND type=:type")
         .addParameter("id", this.id)
+        .addParameter("type", this.type)
         .addParameter("name", this.name)
         .executeUpdate();
     }
@@ -51,8 +53,10 @@ public class Animal implements DatabaseInterface {
 
   public static Animal findById(int pId) {
     try (Connection con = DB.sql2o.open()) {
-      return con.createQuery("SELECT * FROM animals WHERE id=:id")
+      return con.createQuery("SELECT * FROM animals WHERE id=:id AND type=:type")
         .addParameter("id", pId)
+        .addParameter("type", "animal")
+        .throwOnMappingFailure(false)
         .executeAndFetchFirst(Animal.class);
     }
   }
@@ -60,7 +64,8 @@ public class Animal implements DatabaseInterface {
   public static List<Animal> allAnimals() {
     try (Connection con = DB.sql2o.open()) {
       return con.createQuery("SELECT * FROM animals WHERE type=:type")
-        .addParameter("type", ANIMAL_TYPE)
+        .addParameter("type", "animal")
+        .throwOnMappingFailure(false)
         .executeAndFetch(Animal.class);
     }
   }
