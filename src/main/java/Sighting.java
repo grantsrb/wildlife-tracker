@@ -8,12 +8,14 @@ import java.util.Date;
 public class Sighting implements DatabaseInterface {
   private int id;
   private int animalId;
+  private int animalType;
   private int locationId;
   private int rangerId;
   private Timestamp timeSpotted;
 
-  public Sighting(int pAnimalId, int pLocationId, int pRangerId) {
+  public Sighting(int pAnimalId, String pAnimalType, int pLocationId, int pRangerId) {
     this.animalId = pAnimalId;
+    this.animalType = pAnimalType;
     this.locationId = pLocationId;
     this.rangerId = pRangerId;
     this.timeSpotted = new Timestamp(new Date().getTime());
@@ -28,6 +30,10 @@ public class Sighting implements DatabaseInterface {
 
   public int getAnimalId() {
     return this.animalId;
+  }
+
+  public String getAnimalType() {
+    return this.animalType;
   }
 
   public int getLocationId() {
@@ -60,27 +66,28 @@ public class Sighting implements DatabaseInterface {
     }
   }
 
-  // public static List<Sighting> allAnimalSightings() {
-  //   try (Connection con = DB.sql2o.open()) {
-  //     return con.createQuery("SELECT * FROM sightings")
-  //       .executeAndFetch(Sighting.class);
-  //   }
-  // }
-  //
-  // public static List<Sighting> allEndangeredSightings() {
-  //   try (Connection con = DB.sql2o.open()) {
-  //     return con.createQuery("SELECT * FROM sightings")
-  //       .executeAndFetch(Sighting.class);
-  //   }
-  // }
+  public static List<Sighting> allAnimalSightings() {
+    try (Connection con = DB.sql2o.open()) {
+      return con.createQuery("SELECT * FROM sightings")
+        .executeAndFetch(Sighting.class);
+    }
+  }
+
+  public static List<Sighting> allEndangeredSightings() {
+    try (Connection con = DB.sql2o.open()) {
+      return con.createQuery("SELECT * FROM sightings")
+        .executeAndFetch(Sighting.class);
+    }
+  }
 
   /////////////////////////////////////////////////////////////////////////////
   /// DatabaseInterface Methods
 
   public void save() {
     try (Connection con = DB.sql2o.open()) {
-      this.id = (int) con.createQuery("INSERT INTO sightings (animalId, locationId, rangerId, timeSpotted) VALUES (:animalId, :locationId, :rangerId, :timeSpotted)", true)
+      this.id = (int) con.createQuery("INSERT INTO sightings (animalId, animalType, locationId, rangerId, timeSpotted) VALUES (:animalId, :animalType :locationId, :rangerId, :timeSpotted)", true)
         .addParameter("animalId", this.animalId)
+        .addParameter("animalType", this.animalType)
         .addParameter("locationId", this.locationId)
         .addParameter("rangerId", this.rangerId)
         .addParameter("timeSpotted", this.timeSpotted)
