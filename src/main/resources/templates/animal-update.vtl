@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-sm-3">
+    <h2>Animal</h2>
+  </div>
+  <div class="col-sm-6">
+    <div class="container">
+      <h2>Details</h2>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <h4><strong>$animal.getName()</strong></h4>
+  </div>
+  <div class="col-sm-6">
+    <div class="container">
+      <ul>
+        <p><strong>$animal.getType()</strong></p><br>
+        <p><strong>Sightings: </strong></p>
+        #foreach($sighting in $animal.getSightings())
+          <li><strong>Time Spotted: </strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></li>
+          <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
+          <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+        #end
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h3>Update Animal: </h3>
+<form action="/animals/update" method="post">
+  <input type="hidden" name="type" value="$animal.getId()">
+  <div class="form-group">
+    <label for="name">New name of animal:</label>
+    <input type="text" name="name" class="form-control">
+  </div>
+  #if($animal.type())
+  <input type="submit" value="Update">
+</form>
+
+<form action="/animals/delete" method="post">
+  <input type="hidden" name="id" value="$animal.getId()">
+  <input type="submit" name="delete" value="delete">
+</form>

@@ -60,6 +60,20 @@ public class Sighting implements DatabaseInterface {
     }
   }
 
+  // public static List<Sighting> allAnimalSightings() {
+  //   try (Connection con = DB.sql2o.open()) {
+  //     return con.createQuery("SELECT * FROM sightings")
+  //       .executeAndFetch(Sighting.class);
+  //   }
+  // }
+  //
+  // public static List<Sighting> allEndangeredSightings() {
+  //   try (Connection con = DB.sql2o.open()) {
+  //     return con.createQuery("SELECT * FROM sightings")
+  //       .executeAndFetch(Sighting.class);
+  //   }
+  // }
+
   /////////////////////////////////////////////////////////////////////////////
   /// DatabaseInterface Methods
 

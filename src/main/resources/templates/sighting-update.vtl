@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-sm-3">
+    <h2>Time of Sighting</h2>
+  </div>
+  <div class="col-sm-6">
+    <div class="container">
+      <h2>Details</h2>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <h4><strong>$sighting.getTimeSpotted()</strong></h4>
+  </div>
+  <div class="col-sm-6">
+    <div class="container">
+      <ul>
+        <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $Animal.findById($sighting.getAnimalId()).getName()</a></li>
+        <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
+        <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<form action="/sightings/delete" method="post">
+  <input type="hidden" name="id" value="$sighting.getId()">
+  <input type="submit" name="delete" value="delete">
+</form>

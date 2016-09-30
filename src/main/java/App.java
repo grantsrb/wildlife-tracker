@@ -41,6 +41,19 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    post("/sightings/delete", (request,response) -> {
+      Map<String, Object> model = homepageModel();
+      int sightingId = Integer.parseInt(request.params(":id"));
+      model.put("sighting", Sighting.findById(sightingId));
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/sightings/:id", (request,response) -> {
+      int sightingId = Integer.parseInt(request.queryParams("id"));
+      Sighting.findById(sightingId).delete();
+      return new ModelAndView(homepageModel(), layout);
+    }, new VelocityTemplateEngine());
+
     post("/animals/new-animal", (request,response) -> {
       Map<String, Object> model = animalModel();
       String name = request.queryParams("name");
@@ -121,6 +134,7 @@ public class App {
   public static Map<String,Object> homepageModel() {
     Map<String,Object> model = new HashMap<>();
     model.put("Animal", Animal.class);
+    model.put("EndangeredAnimal", EndangeredAnimal.class);
     model.put("Location", Location.class);
     model.put("Ranger", Ranger.class);
     model.put("sightings", Sighting.allSightings());

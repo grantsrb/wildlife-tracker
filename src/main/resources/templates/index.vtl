@@ -13,15 +13,31 @@
       </div>
     </div>
   </div>
-  #foreach($sighting in $sightings)
+  #foreach($sighting in $animalSightings)
     <div class="row">
       <div class="col-sm-3">
-        <h4><a href="/sightings/update"><strong>$sighting.getTimeSpotted()</strong></a></h4>
+        <h4><a href="/sightings/$sighting.getId()"><strong>$sighting.getTimeSpotted()</strong></a></h4>
       </div>
       <div class="col-sm-6">
         <div class="container">
           <ul>
             <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $Animal.findById($sighting.getAnimalId()).getName()</a></li>
+            <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
+            <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  #end
+  #foreach($sighting in $endangeredSightings)
+    <div class="row">
+      <div class="col-sm-3">
+        <h4><a href="/sightings/$sighting.getId()"><strong>$sighting.getTimeSpotted()</strong></a></h4>
+      </div>
+      <div class="col-sm-6">
+        <div class="container">
+          <ul>
+            <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $EndangeredAnimal.findById($sighting.getAnimalId()).getName()</a></li>
             <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
             <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
           </ul>

@@ -89,6 +89,10 @@ public class Animal implements DatabaseInterface {
   }
 
   public void delete() {
+    List<Sighting> sightings = this.getSightings();
+    for (Sighting sighting : sightings) {
+      sighting.delete();
+    }
     try (Connection con = DB.sql2o.open()) {
       con.createQuery("DELETE FROM animals WHERE id=:id AND type=:type")
         .addParameter("id", this.id)
