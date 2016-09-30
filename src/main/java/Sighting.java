@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.util.Date;
 
-public class Sighting {
+public class Sighting implements DatabaseInterface {
   private int id;
   private int animalId;
   private int locationId;
