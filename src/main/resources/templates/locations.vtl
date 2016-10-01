@@ -22,10 +22,14 @@
         <div class="container">
           <ul>
             <p><strong>Sightings: </strong></p>
-            #foreach($sighting in $location.getSightings())
-              <li><strong>Animal: </strong><a href="/animals/$sighting.getAnimalId()"> $Animal.findById($sighting.getAnimalId()).getName()</a></li>
-              <li><strong>Time Spotted: </strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></li>
-              <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+            #if($location.getSightings().size() > 0)
+              #foreach($sighting in $location.getSightings())
+                <li><strong>Animal: </strong><a href="/animals/$sighting.getAnimalId()"> $sighting.getAnimalName()</a></li>
+                <li><strong>Time Spotted: </strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></li>
+                <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $sighting.getRangerName()</a></li><br>
+              #end
+            #else
+              <p>No sightings yet!</p>
             #end
           </ul>
         </div>

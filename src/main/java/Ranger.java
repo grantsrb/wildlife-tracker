@@ -41,11 +41,25 @@ public class Ranger implements DatabaseInterface{
   }
 
   public void setName(String pName) {
+    if (pName.equals(""))
+      throw new IllegalArgumentException("Rangers must have a name!");
     this.name = pName;
     try(Connection con = DB.sql2o.open()) {
       con.createQuery("UPDATE rangers SET name=:name WHERE id=:id")
         .addParameter("id", this.id)
         .addParameter("name", this.name)
+        .executeUpdate();
+    }
+  }
+
+  public void setBadgeId(String pBadgeId) {
+    if (pBadgeId.equals(""))
+      throw new IllegalArgumentException("Rangers must have a badgeId!");
+    this.badgeId = pBadgeId;
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery("UPDATE rangers SET badgeId=:badgeId WHERE id=:id")
+        .addParameter("id", this.id)
+        .addParameter("badgeId", this.badgeId)
         .executeUpdate();
     }
   }

@@ -35,6 +35,8 @@ public class Location implements DatabaseInterface {
   }
 
   public void setName(String pName) {
+    if (pName.equals(""))
+      throw new IllegalArgumentException("Locations must have a name!");
     this.name = pName;
     try(Connection con = DB.sql2o.open()) {
       con.createQuery("UPDATE locations SET name=:name WHERE id=:id")

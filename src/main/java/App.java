@@ -136,6 +136,32 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    post("/locations/update", (request, response) -> {
+      Map<String, Object> model = locationModel();
+      int locationId = Integer.parseInt(request.queryParams("id"));
+      String name = request.queryParams("name");
+      try {
+        Location.findById(locationId).setName(name);
+      } catch (IllegalArgumentException exception) {
+        model.put("exception", exception);
+      }
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/locations/delete", (request,response) -> {
+      int locationId = Integer.parseInt(request.queryParams("id"));
+      Location.findById(locationId).delete();
+      return new ModelAndView(locationModel(), layout);
+    }, new VelocityTemplateEngine());
+
+    get("/locations/:id", (request,response) -> {
+      Map<String,Object> model = locationModel();
+      int locationId = Integer.parseInt(request.params(":id"));
+      model.put("location", Location.findById(locationId));
+      model.put("template", "templates/location-update.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     get("/locations", (request,response) -> {
       return new ModelAndView(locationModel(), layout);
     }, new VelocityTemplateEngine());
