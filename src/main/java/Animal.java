@@ -43,6 +43,8 @@ public class Animal implements DatabaseInterface {
   }
 
   public void setName(String pName) {
+    if(pName.equals(""))
+      throw new IllegalArgumentException("You must enter a new name to update!");
     this.name = pName;
     try(Connection con = DB.sql2o.open()) {
       con.createQuery("UPDATE animals SET name=:name WHERE id=:id AND type=:type")

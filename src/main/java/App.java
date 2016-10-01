@@ -86,6 +86,18 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    post("/animals/update", (request, response) -> {
+      Map<String, Object> model = animalModel();
+      int animalId = Integer.parseInt(request.queryParams("id"));
+      String name = request.queryParams("name");
+      try {
+        Animal.findById(animalId).setName(name);
+      } catch (IllegalArgumentException exception) {
+        model.put("exception", exception);
+      }
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     post("/animals/type", (request,response) -> {
       Map<String, Object> model = animalModel();
       String type = request.queryParams("type");

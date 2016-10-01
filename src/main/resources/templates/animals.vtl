@@ -23,10 +23,14 @@
           <ul>
             <p><strong>$animal.getType()</strong></p><br>
             <p><strong>Sightings: </strong></p>
-            #foreach($sighting in $animal.getSightings())
-              <li><strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></strong></li>
-              <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
-              <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li><br>
+            #if($animal.getSightings().size() > 0)
+              #foreach($sighting in $animal.getSightings())
+                <li><strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></strong></li>
+                <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
+                <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li><br>
+              #end
+            #else
+              <p>No sightings yet!</p>
             #end
           </ul>
         </div>
@@ -45,10 +49,14 @@
             <p><strong>Medical Diagnosis: </strong>$endangered.getHealth()</p>
             <p><strong>Age: </strong>$endangered.getAge()</p>
             <p><strong>Sightings: </strong></p>
-            #foreach($sighting in $endangered.getSightings())
-              <li><strong><a href="/sightings/$sighting.getId()">$sighting.getTimeSpotted()</a></strong></li>
-              <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
-              <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li><br>
+            #if($endangered.getSightings().size() > 0)
+              #foreach($sighting in $endangered.getSightings())
+                <li><strong><a href="/sightings/$sighting.getId()">$sighting.getTimeSpotted()</a></strong></li>
+                <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
+                <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li><br>
+              #end
+            #else
+              <p>No sightings yet!</p>
             #end
           </ul>
         </div>
