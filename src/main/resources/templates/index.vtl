@@ -21,7 +21,7 @@
       <div class="col-sm-6">
         <div class="container">
           <ul>
-            <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $Animal.findById($sighting.getAnimalId()).getName()</a></li>
+            <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()/$sighting.getAnimalType()"> $sighting.getAnimalName()</a></li>
             <li><strong>Animal Type: </strong><em>$sighting.getAnimalType()</em></li>
             <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $sighting.getLocationName()</a></li>
             <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $sighting.getRangerName()</a></li>
@@ -38,7 +38,7 @@
       <div class="col-sm-6">
         <div class="container">
           <ul>
-            <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $EndangeredAnimal.findById($sighting.getAnimalId()).getName()</a></li>
+            <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()/$sighting.getAnimalType()"> $sighting.getAnimalName()</a></li>
             <li><strong>Animal Type: </strong><em>$sighting.getAnimalType()</em></li>
             <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $sighting.getLocationName()</a></li>
             <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $sighting.getRangerName()</a></li>
@@ -58,7 +58,7 @@
       <div class="form-group">
         <label for="location">Location of sighting:</label>
         <select name="location" class="form-control" required>
-          #foreach($location in $Location.allLocations())
+          #foreach($location in $locations)
             <option value="$location.getId()">$location.getName()</option>
           #end
         </select>
@@ -67,11 +67,11 @@
         <label for="animal">Animal sighted <em>(or create new unendangered animal below)</em>:</label>
         <select name="animal" class="form-control">
           <option value="0" selected="selected">--</option>
-          #foreach($animal in $Animal.allAnimals())
-            <option value="$animal.getId()">$animal.getName()</option>
+          #foreach($animal in $animals)
+            <option value="a $animal.getId()">$animal.getName()</option>
           #end
-          #foreach($animal in $EndangeredAnimal.allEndangeredAnimals())
-            <option value="$animal.getId()">$animal.getName()</option>
+          #foreach($animal in $endangereds)
+            <option value="e $animal.getId()">$animal.getName()</option>
           #end
         </select>
       </div>
@@ -82,7 +82,7 @@
       <div class="form-group">
         <label for="ranger">Ranger who sighted animal:</label>
         <select name="ranger" class="form-control" required>
-          #foreach($ranger in $Ranger.allRangers())
+          #foreach($ranger in $rangers)
             <option value="$ranger.getId()">$ranger.getName()</option>
           #end
         </select>

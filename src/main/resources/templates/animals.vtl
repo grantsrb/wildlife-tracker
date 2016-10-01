@@ -16,12 +16,12 @@
   #foreach($animal in $animals)
     <div class="row">
       <div class="col-sm-3">
-        <h4><a href="/animals/$animal.getId()"><strong>$animal.getName()</strong></a></h4>
+        <h4><a href="/animals/$animal.getId()/$animal.getType()"><strong>$animal.getName()</strong></a></h4>
       </div>
       <div class="col-sm-6">
         <div class="container">
           <ul>
-            <p><strong>$animal.getType()</strong></p><br>
+            <p><strong>Type: </strong>$animal.getType()</p><br>
             <p><strong>Sightings: </strong></p>
             #if($animal.getSightings().size() > 0)
               #foreach($sighting in $animal.getSightings())
@@ -40,7 +40,7 @@
   #foreach($endangered in $endangereds)
     <div class="row">
       <div class="col-sm-3">
-        <h4><strong>$endangered.getName()</strong></h4>
+        <h4><strong><a href="/animals/$endangered.getId()/$endangered.getType()">$endangered.getName()</a></strong></h4>
       </div>
       <div class="col-sm-6">
         <div class="container">

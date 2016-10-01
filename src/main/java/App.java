@@ -22,9 +22,9 @@ public class App {
     post("/sightings/new", (request,response) -> {
       Map<String, Object> model = homepageModel();
       int locationId = Integer.parseInt(request.queryParams("location"));
-      int animalId = Integer.parseInt(request.queryParams("animal"));
       int rangerId = Integer.parseInt(request.queryParams("ranger"));
-      if(animalId == 0) {
+      String animalIntel = request.queryParams("animal");
+      if(animalIntel.equals("0")) {
         String animalName = request.queryParams("animal-entry");
         try {
           Animal newAnimal = new Animal(animalName);
@@ -35,9 +35,17 @@ public class App {
           model.put("success", true);
         } catch (IllegalArgumentException exception) {}
       } else {
-        Animal animal = Animal.findById(animalId);
-        Sighting newSighting = new Sighting(animalId, animal.getType(), locationId, rangerId);
-        newSighting.save();
+        if(animalIntel.charAt(0) == 'a') {
+          int animalId = Integer.parseInt(animalIntel.substring(2));
+          Animal animal = Animal.findById(animalId);
+          Sighting newSighting = new Sighting(animalId, animal.getType(), locationId, rangerId);
+          newSighting.save();
+        } else {
+          int animalId = Integer.parseInt(animalIntel.substring(2));
+          EndangeredAnimal endangered = EndangeredAnimal.findById(animalId);
+          Sighting newSighting = new Sighting(animalId, endangered.getType(), locationId, rangerId);
+          newSighting.save();
+        }
         model=homepageModel();
         model.put("success", true);
       }
@@ -86,15 +94,29 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/animals/update", (request, response) -> {
+    post("/animals/update/:type", (request, response) -> {
       Map<String, Object> model = animalModel();
       int animalId = Integer.parseInt(request.queryParams("id"));
       String name = request.queryParams("name");
-      try {
-        Animal.findById(animalId).setName(name);
-      } catch (IllegalArgumentException exception) {
-        model.put("exception", exception);
+      String type = request.params(":type");
+      if(type.equals("animal")) {
+        try {
+          Animal animal = Animal.findById(animalId);
+          animal.setName(name);
+          model.put("animal", animal);
+        } catch (IllegalArgumentException exception) {
+          model.put("exception", exception);
+        }
+      } else {
+        try {
+          EndangeredAnimal animal = EndangeredAnimal.findById(animalId);
+          animal.setName(name);
+          model.put("animal", animal);
+        } catch (IllegalArgumentException exception) {
+          model.put("exception", exception);
+        }
       }
+      model.put("template", "templates/animal-update.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -105,16 +127,24 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/animals/delete", (request,response) -> {
+    post("/animals/delete/:type", (request,response) -> {
       int animalId = Integer.parseInt(request.queryParams("id"));
-      Animal.findById(animalId).delete();
+      String type = request.params(":type");
+      if(type.equals("animal"))
+        Animal.findById(animalId).delete();
+      else
+        EndangeredAnimal.findById(animalId).delete();
       return new ModelAndView(animalModel(), layout);
     }, new VelocityTemplateEngine());
 
-    get("/animals/:id", (request,response) -> {
+    get("/animals/:id/:type", (request,response) -> {
       Map<String,Object> model = animalModel();
-      int animalId = Integer.parseInt(request.params(":id"));
-      model.put("animal", Animal.findById(animalId));
+      String type = request.params(":type");
+      int animalId= Integer.parseInt(request.params(":id"));
+      if(type.equals("animal"))
+        model.put("animal", Animal.findById(animalId));
+      else
+        model.put("animal", EndangeredAnimal.findById(animalId));
       model.put("template", "templates/animal-update.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -141,10 +171,13 @@ public class App {
       int locationId = Integer.parseInt(request.queryParams("id"));
       String name = request.queryParams("name");
       try {
-        Location.findById(locationId).setName(name);
+        Location location = Location.findById(locationId);
+        location.setName(name);
+        model.put("location", location);
       } catch (IllegalArgumentException exception) {
         model.put("exception", exception);
       }
+      model.put("template", "templates/location-update.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -181,7 +214,6 @@ public class App {
     }, new VelocityTemplateEngine());
 
     post("/rangers/update", (request, response) -> {
-      Map<String, Object> model = rangerModel();
       int rangerId = Integer.parseInt(request.queryParams("id"));
       String name = request.queryParams("name");
       String badgeId = request.queryParams("badgeId");
@@ -190,6 +222,9 @@ public class App {
         ranger.setName(name);
       if(!badgeId.equals(""))
         ranger.setBadgeId(badgeId);
+      Map<String, Object> model = rangerModel();
+      model.put("ranger", ranger);
+      model.put("template", "templates/ranger-update.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -218,8 +253,12 @@ public class App {
     Map<String,Object> model = new HashMap<>();
     model.put("Animal", Animal.class);
     model.put("EndangeredAnimal", EndangeredAnimal.class);
+    model.put("animals", Animal.allAnimals());
+    model.put("endangereds", EndangeredAnimal.allEndangeredAnimals());
     model.put("Location", Location.class);
+    model.put("locations", Location.allLocations());
     model.put("Ranger", Ranger.class);
+    model.put("rangers", Ranger.allRangers());
     model.put("animalSightings", Sighting.allAnimalSightings());
     model.put("endangeredSightings", Sighting.allEndangeredSightings());
     model.put("success", false);
@@ -246,8 +285,6 @@ public class App {
 
   public static Map<String,Object> animalModel() {
     Map<String, Object> model = homepageModel();
-    model.put("animals", Animal.allAnimals());
-    model.put("endangereds", EndangeredAnimal.allEndangeredAnimals());
     model.put("type", "none");
     model.put("exception", "");
     model.put("template", "templates/animals.vtl");

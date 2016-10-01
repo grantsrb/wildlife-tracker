@@ -16,9 +16,9 @@
     <div class="container">
       <ul>
         #if ($sighing.getAnimalType() == $Animal.ANIMAL_TYPE)
-          <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $sighting.getAnimalName()</a></li>
+          <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()/$sighting.getAnimalType()"> $sighting.getAnimalName()</a></li>
         #else
-          <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $sighting.getAnimalName()</a> <em>$EndangeredAnimal.ANIMAL_TYPE</em></li>
+          <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()/$sighting.getAnimalType()"> $sighting.getAnimalName()</a> <em>$EndangeredAnimal.ANIMAL_TYPE</em></li>
         #end
         <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $sighting.getLocationName()</a></li>
         <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $sighting.getRangerName()</a></li>

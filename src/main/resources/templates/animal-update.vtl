@@ -15,13 +15,17 @@
   <div class="col-sm-6">
     <div class="container">
       <ul>
-        <p><strong>$animal.getType()</strong></p><br>
-        <p><strong>Sightings: </strong></p>
+        <p><strong>Type: </strong>$animal.getType()</p><br>
+        #if($animal.getType().equals("endangered"))
+          <p><strong>Medical Diagnosis: </strong>$animal.getHealth()</p>
+          <p><strong>Age: </strong>$animal.getAge()</p>
+          <p><strong>Sightings: </strong></p>
+        #end
         #if($animal.getSightings().size() > 0)
           #foreach($sighting in $animal.getSightings())
             <li><strong>Time Spotted: </strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></li>
-            <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
-            <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+            <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $sighting.getLocationName()</a></li>
+            <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $sighting.getRangerName()</a></li>
           #end
         #else
           <p>No sightings yet!</p>
@@ -32,7 +36,7 @@
 </div>
 
 <h3>Update Animal Name: </h3>
-<form action="/animals/update" method="post">
+<form action="/animals/update/$animal.getType()" method="post">
   <input type="hidden" name="id" value="$animal.getId()">
   <div class="form-group">
     <label for="name">New name of animal:</label>
@@ -41,8 +45,8 @@
   <input type="submit" value="Update">
 </form>
 
-<h3>Delete Animal and All Corresponding Sightings</h3>
-<form action="/animals/delete" method="post">
+<h3>Delete $animal.getName() and All Corresponding Sightings</h3>
+<form action="/animals/delete/$animal.getType()" method="post">
   <input type="hidden" name="id" value="$animal.getId()">
   <input type="submit" name="delete" value="delete">
 </form>
