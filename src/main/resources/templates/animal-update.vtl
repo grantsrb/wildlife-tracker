@@ -33,7 +33,7 @@
 
 <h3>Update Animal Name: </h3>
 <form action="/animals/update" method="post">
-  <input type="hidden" name="type" value="$animal.getId()">
+  <input type="hidden" name="id" value="$animal.getId()">
   <div class="form-group">
     <label for="name">New name of animal:</label>
     <input type="text" name="name" class="form-control">
@@ -48,4 +48,4 @@
 </form>
 
 
-<p>exception</p>
+<p>$exception</p>

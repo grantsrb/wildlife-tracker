@@ -180,6 +180,33 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    post("/rangers/update", (request, response) -> {
+      Map<String, Object> model = rangerModel();
+      int rangerId = Integer.parseInt(request.queryParams("id"));
+      String name = request.queryParams("name");
+      String badgeId = request.queryParams("badgeId");
+      Ranger ranger = Ranger.findById(rangerId);
+      if(!name.equals(""))
+        ranger.setName(name);
+      if(!badgeId.equals(""))
+        ranger.setBadgeId(badgeId);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/rangers/delete", (request,response) -> {
+      int rangerId = Integer.parseInt(request.queryParams("id"));
+      Ranger.findById(rangerId).delete();
+      return new ModelAndView(rangerModel(), layout);
+    }, new VelocityTemplateEngine());
+
+    get("/rangers/:id", (request,response) -> {
+      Map<String,Object> model = rangerModel();
+      int rangerId = Integer.parseInt(request.params(":id"));
+      model.put("ranger", Ranger.findById(rangerId));
+      model.put("template", "templates/ranger-update.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
     get("/rangers", (request,response) -> {
       return new ModelAndView(rangerModel(), layout);
     }, new VelocityTemplateEngine());

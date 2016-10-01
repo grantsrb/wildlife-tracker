@@ -44,3 +44,12 @@
     <p>$exception</p>
   </div>
 </div>
+
+<h3>Delete Location and All Corresponding Sightings</h3>
+<form action="/locations/delete" method="post">
+  <input type="hidden" name="id" value="$location.getId()">
+  <input type="submit" name="delete" value="delete">
+</form>
+
+
+<p>$exception</p>

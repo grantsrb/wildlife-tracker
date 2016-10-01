@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-sm-3">
+    <h2>Ranger</h2>
+  </div>
+  <div class="col-sm-6">
+    <div class="container">
+      <h2>Details</h2>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <h4><a href="/rangers/$ranger.getId()"><strong>$ranger.getName()</strong></a></h4>
+  </div>
+  <div class="col-sm-6">
+    <div class="container">
+      <ul>
+        <p><strong>Sightings: </strong></p>
+        #if($ranger.getSightings().size() > 0)
+          #foreach($sighting in $ranger.getSightings())
+            <li><strong>Animal: </strong><a href="/animals/$sighting.getAnimalId()"> $sighting.getAnimalName()</a></li>
+            <li><strong>Time Spotted: </strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></li>
+            <li><strong>Location: </strong><a href="/rangers/$sighting.getLocationId()"> $sighting.getLocationName()</a></li>
+          #end
+        #else
+          <p>No sightings yet!</p>
+        #end
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4">
+    <h3>Update Ranger</h3>
+    <form action="/rangers/update" method="post">
+      <input type="hidden" name="id" value="$ranger.getId()">
+      <div class="form-group">
+        <label for="name">New Name:</label>
+        <input type="text" name="name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="badgeId">New Badge Id:</label>
+        <input type="text" name="badgeId" class="form-control">
+      </div>
+      <input type="submit" value="Create">
+    </form>
+    <p>$exception</p>
+  </div>
+</div>
+
+<h3>Delete Ranger and All Corresponding Sightings</h3>
+<form action="/rangers/delete" method="post">
+  <input type="hidden" name="id" value="$ranger.getId()">
+  <input type="submit" name="delete" value="delete">
+</form>
