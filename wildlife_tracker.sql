@@ -145,7 +145,8 @@ CREATE TABLE sightings (
     animalid integer,
     locationid integer,
     rangerid integer,
-    timespotted timestamp without time zone
+    timespotted timestamp without time zone,
+    animaltype character varying
 );
 
 
@@ -205,7 +206,8 @@ ALTER TABLE ONLY sightings ALTER COLUMN id SET DEFAULT nextval('sightings_id_seq
 --
 
 COPY animals (id, name, type, health, age) FROM stdin;
-1	Cat	animal	\N	\N
+1	Bob Cat	animal	\N	\N
+3	Jilly	endangered	average	adult
 \.
 
 
@@ -213,7 +215,7 @@ COPY animals (id, name, type, health, age) FROM stdin;
 -- Name: animals_id_seq; Type: SEQUENCE SET; Schema: public; Owner: satchelgrant
 --
 
-SELECT pg_catalog.setval('animals_id_seq', 1, true);
+SELECT pg_catalog.setval('animals_id_seq', 3, true);
 
 
 --
@@ -221,7 +223,6 @@ SELECT pg_catalog.setval('animals_id_seq', 1, true);
 --
 
 COPY locations (id, name) FROM stdin;
-1	By the tree
 \.
 
 
@@ -229,7 +230,7 @@ COPY locations (id, name) FROM stdin;
 -- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: satchelgrant
 --
 
-SELECT pg_catalog.setval('locations_id_seq', 1, true);
+SELECT pg_catalog.setval('locations_id_seq', 2, true);
 
 
 --
@@ -237,6 +238,8 @@ SELECT pg_catalog.setval('locations_id_seq', 1, true);
 --
 
 COPY rangers (id, name, badgeid) FROM stdin;
+3	Bill	67
+2	Jude	54
 \.
 
 
@@ -244,14 +247,14 @@ COPY rangers (id, name, badgeid) FROM stdin;
 -- Name: rangers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: satchelgrant
 --
 
-SELECT pg_catalog.setval('rangers_id_seq', 1, false);
+SELECT pg_catalog.setval('rangers_id_seq', 4, true);
 
 
 --
 -- Data for Name: sightings; Type: TABLE DATA; Schema: public; Owner: satchelgrant
 --
 
-COPY sightings (id, animalid, locationid, rangerid, timespotted) FROM stdin;
+COPY sightings (id, animalid, locationid, rangerid, timespotted, animaltype) FROM stdin;
 \.
 
 
@@ -259,7 +262,7 @@ COPY sightings (id, animalid, locationid, rangerid, timespotted) FROM stdin;
 -- Name: sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: satchelgrant
 --
 
-SELECT pg_catalog.setval('sightings_id_seq', 1, false);
+SELECT pg_catalog.setval('sightings_id_seq', 5, true);
 
 
 --
