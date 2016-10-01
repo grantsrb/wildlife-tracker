@@ -24,7 +24,7 @@
             <p><strong>$animal.getType()</strong></p><br>
             <p><strong>Sightings: </strong></p>
             #foreach($sighting in $animal.getSightings())
-              <li><strong>Time Spotted: </strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></li>
+              <li><strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></strong></li>
               <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
               <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li><br>
             #end
@@ -41,12 +41,12 @@
       <div class="col-sm-6">
         <div class="container">
           <ul>
-            <p><strong>$endangered.getType()</strong></p>
-            <p><strong>$endangered.getHealth()</strong></p>
-            <p><strong>$endangered.getAge()</strong></p>
+            <p><strong>Type: </strong>$endangered.getType()</p>
+            <p><strong>Medical Diagnosis: </strong>$endangered.getHealth()</p>
+            <p><strong>Age: </strong>$endangered.getAge()</p>
             <p><strong>Sightings: </strong></p>
             #foreach($sighting in $endangered.getSightings())
-              <li><strong>Time Spotted: </strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></li>
+              <li><strong><a href="/sightings/$sighting.getId()">$sighting.getTimeSpotted()</a></strong></li>
               <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
               <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li><br>
             #end

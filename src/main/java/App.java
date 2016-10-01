@@ -45,10 +45,9 @@ public class App {
     }, new VelocityTemplateEngine());
 
     post("/sightings/delete", (request,response) -> {
-      Map<String, Object> model = homepageModel();
       int sightingId = Integer.parseInt(request.queryParams("id"));
       Sighting.findById(sightingId).delete();
-      return new ModelAndView(model, layout);
+      return new ModelAndView(homepageModel(), layout);
     }, new VelocityTemplateEngine());
 
     get("/sightings/:id", (request,response) -> {
@@ -91,6 +90,20 @@ public class App {
       Map<String, Object> model = animalModel();
       String type = request.queryParams("type");
       model.put("type", type);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/animals/delete", (request,response) -> {
+      int animalId = Integer.parseInt(request.queryParams("id"));
+      Animal.findById(animalId).delete();
+      return new ModelAndView(animalModel(), layout);
+    }, new VelocityTemplateEngine());
+
+    get("/animals/:id", (request,response) -> {
+      Map<String,Object> model = animalModel();
+      int animalId = Integer.parseInt(request.params(":id"));
+      model.put("animal", Animal.findById(animalId));
+      model.put("template", "templates/animal-update.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 

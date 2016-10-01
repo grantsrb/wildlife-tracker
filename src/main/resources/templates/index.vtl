@@ -23,8 +23,8 @@
           <ul>
             <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $Animal.findById($sighting.getAnimalId()).getName()</a></li>
             <li><strong>Animal Type: </strong><em>$sighting.getAnimalType()</em></li>
-            <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId())</a></li>
-            <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId())</a></li>
+            <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $sighting.getLocationName()</a></li>
+            <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $sighting.getRangerName()</a></li>
           </ul>
         </div>
       </div>
@@ -40,8 +40,8 @@
           <ul>
             <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $EndangeredAnimal.findById($sighting.getAnimalId()).getName()</a></li>
             <li><strong>Animal Type: </strong><em>$sighting.getAnimalType()</em></li>
-            <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
-            <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+            <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $sighting.getLocationName()</a></li>
+            <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $sighting.getRangerName()</a></li>
           </ul>
         </div>
       </div>

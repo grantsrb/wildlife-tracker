@@ -48,6 +48,31 @@ public class Sighting implements DatabaseInterface {
     return DateFormat.getDateTimeInstance().format(this.timeSpotted);
   }
 
+  public String getAnimalName() {
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery("SELECT name FROM animals WHERE id=:id AND type=:type")
+        .addParameter("id", this.animalId)
+        .addParameter("type", this.animalType)
+        .executeAndFetchFirst(String.class);
+    }
+  }
+
+  public String getLocationName() {
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery("SELECT name FROM locations WHERE id=:id")
+        .addParameter("id", this.locationId)
+        .executeAndFetchFirst(String.class);
+    }
+  }
+
+  public String getRangerName() {
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery("SELECT name FROM rangers WHERE id=:id")
+        .addParameter("id", this.rangerId)
+        .executeAndFetchFirst(String.class);
+    }
+  }
+
   /////////////////////////////////////////////////////////////////////////////
   /// Static Methods
 
