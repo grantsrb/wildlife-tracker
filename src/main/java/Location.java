@@ -76,8 +76,8 @@ public class Location implements DatabaseInterface {
 
   public void delete() {
     List<Sighting> sightings = this.getSightings();
-    for (Sighting sighting : sightings) {
-      sighting.delete();
+    for (int i = 0; i < sightings.size(); i++) {
+      sightings.get(0).delete();
     }
     try (Connection con = DB.sql2o.open()) {
       con.createQuery("DELETE FROM locations WHERE id=:id")

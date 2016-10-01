@@ -2,7 +2,7 @@
   <h1>Sightings</h1>
 </div>
 
-#if ($sightings.size() > 0)
+#if ($animalSightings.size() > 0 || $endangeredSightings.size() > 0)
   <div class="row">
     <div class="col-sm-3">
       <h2>Time of Sighting</h2>
@@ -22,8 +22,9 @@
         <div class="container">
           <ul>
             <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $Animal.findById($sighting.getAnimalId()).getName()</a></li>
-            <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
-            <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+            <li><strong>Animal Type: </strong><em>$sighting.getAnimalType()</em></li>
+            <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId())</a></li>
+            <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId())</a></li>
           </ul>
         </div>
       </div>
@@ -38,6 +39,7 @@
         <div class="container">
           <ul>
             <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $EndangeredAnimal.findById($sighting.getAnimalId()).getName()</a></li>
+            <li><strong>Animal Type: </strong><em>$sighting.getAnimalType()</em></li>
             <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
             <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
           </ul>
@@ -62,10 +64,13 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="animal">Animal sighted <em>(or enter new unendangered animal name below)</em>:</label>
+        <label for="animal">Animal sighted <em>(or create new unendangered animal below)</em>:</label>
         <select name="animal" class="form-control">
           <option value="0" selected="selected">--</option>
           #foreach($animal in $Animal.allAnimals())
+            <option value="$animal.getId()">$animal.getName()</option>
+          #end
+          #foreach($animal in $EndangeredAnimal.allEndangeredAnimals())
             <option value="$animal.getId()">$animal.getName()</option>
           #end
         </select>
@@ -82,14 +87,15 @@
           #end
         </select>
       </div>
+      <input type="submit" value="Create Sighting!">
     </form>
   </div>
 </div>
 
 
-<a href="/animals">Enter New Animal</a><br>
-<a href="/locations">Enter New Location</a><br>
-<a href="/rangers">Enter New Ranger</a><br>
+<a href="/animals">Create New Animal</a><br>
+<a href="/locations">Create New Location</a><br>
+<a href="/rangers">Create New Ranger</a><br>
 
 <div class="success">
   #if($success)

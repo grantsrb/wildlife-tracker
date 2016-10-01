@@ -67,9 +67,9 @@ public class AnimalTest {
   public void getSightings_returnsAllSightingInstancesAttachedToThisAnimal_ArrayList() {
     Animal testAnimal = new Animal("Lion");
     testAnimal.save();
-    Sighting testSighting1 = new Sighting(testAnimal.getId(), 1, 1);
+    Sighting testSighting1 = new Sighting(testAnimal.getId(), testAnimal.getType(), 1, 1);
     testSighting1.save();
-    Sighting testSighting2 = new Sighting(testAnimal.getId(), 1, 1);
+    Sighting testSighting2 = new Sighting(testAnimal.getId(), testAnimal.getType(), 1, 1);
     testSighting2.save();
     Sighting foundByMethod1 = testAnimal.getSightings().get(0);
     Sighting foundByMethod2 = testAnimal.getSightings().get(1);

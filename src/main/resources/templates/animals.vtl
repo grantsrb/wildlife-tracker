@@ -2,7 +2,7 @@
   <h1>Animals</h1>
 </div>
 
-#if ($animals.size() > 0)
+#if ($animals.size() > 0 || $endangereds.size() > 0)
   <div class="row">
     <div class="col-sm-3">
       <h2>Animal</h2>
@@ -26,7 +26,7 @@
             #foreach($sighting in $animal.getSightings())
               <li><strong>Time Spotted: </strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></li>
               <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
-              <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+              <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li><br>
             #end
           </ul>
         </div>
@@ -48,7 +48,7 @@
             #foreach($sighting in $endangered.getSightings())
               <li><strong>Time Spotted: </strong><a href="/sightings/$sighting.getId()"> $sighting.getTimeSpotted()</a></li>
               <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
-              <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
+              <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li><br>
             #end
           </ul>
         </div>

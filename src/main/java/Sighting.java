@@ -8,7 +8,7 @@ import java.util.Date;
 public class Sighting implements DatabaseInterface {
   private int id;
   private int animalId;
-  private int animalType;
+  private String animalType;
   private int locationId;
   private int rangerId;
   private Timestamp timeSpotted;
@@ -68,14 +68,16 @@ public class Sighting implements DatabaseInterface {
 
   public static List<Sighting> allAnimalSightings() {
     try (Connection con = DB.sql2o.open()) {
-      return con.createQuery("SELECT * FROM sightings")
+      return con.createQuery("SELECT * FROM sightings WHERE animalType=:type")
+        .addParameter("type", Animal.ANIMAL_TYPE)
         .executeAndFetch(Sighting.class);
     }
   }
 
   public static List<Sighting> allEndangeredSightings() {
     try (Connection con = DB.sql2o.open()) {
-      return con.createQuery("SELECT * FROM sightings")
+      return con.createQuery("SELECT * FROM sightings WHERE animalType=:type")
+        .addParameter("type", EndangeredAnimal.ANIMAL_TYPE)
         .executeAndFetch(Sighting.class);
     }
   }
@@ -85,7 +87,7 @@ public class Sighting implements DatabaseInterface {
 
   public void save() {
     try (Connection con = DB.sql2o.open()) {
-      this.id = (int) con.createQuery("INSERT INTO sightings (animalId, animalType, locationId, rangerId, timeSpotted) VALUES (:animalId, :animalType :locationId, :rangerId, :timeSpotted)", true)
+      this.id = (int) con.createQuery("INSERT INTO sightings (animalId, animalType, locationId, rangerId, timeSpotted) VALUES (:animalId, :animalType, :locationId, :rangerId, :timeSpotted)", true)
         .addParameter("animalId", this.animalId)
         .addParameter("animalType", this.animalType)
         .addParameter("locationId", this.locationId)

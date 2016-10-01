@@ -15,7 +15,11 @@
   <div class="col-sm-6">
     <div class="container">
       <ul>
-        <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $Animal.findById($sighting.getAnimalId()).getName()</a></li>
+        #if ($sighing.getAnimalType().equals("Animal.ANIMAL_TYPE"))
+          <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $Animal.findById($sighting.getAnimalId()).getName()</a></li>
+        #else
+          <li><strong>Animal Spotted: </strong><a href="/animals/$sighting.getAnimalId()"> $EndangeredAnimal.findById($sighting.getAnimalId()).getName()</a><em> $EndangeredAnimal.ANIMAL_TYPE</em></li>
+        #end
         <li><strong>Location: </strong><a href="/locations/$sighting.getLocationId()"> $Location.findById($sighting.getLocationId()).getName()</a></li>
         <li><strong>Ranger: </strong><a href="/rangers/$sighting.getRangerId()"> $Ranger.findById($sighting.getRangerId()).getName()</a></li>
       </ul>

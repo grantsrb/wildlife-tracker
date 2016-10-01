@@ -74,9 +74,9 @@ public class RangerTest {
   public void getSightings_returnsAllSightingInstancesAttachedToThisRanger_ArrayList() {
     Ranger testRanger = new Ranger("Longmire", "007");
     testRanger.save();
-    Sighting testSighting1 = new Sighting(1, 1, testRanger.getId());
+    Sighting testSighting1 = new Sighting(1, "animal", 1, testRanger.getId());
     testSighting1.save();
-    Sighting testSighting2 = new Sighting(1, 1, testRanger.getId());
+    Sighting testSighting2 = new Sighting(1, "animal", 1, testRanger.getId());
     testSighting2.save();
     Sighting foundByMethod1 = testRanger.getSightings().get(0);
     Sighting foundByMethod2 = testRanger.getSightings().get(1);
